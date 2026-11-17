@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plugins & Features Status</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Plugins &amp; Features Status</h1>
+      <span id="saveState" class="save-state">Saved</span>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-view="dashboard" role="tab">Dashboard</button>
+      <button class="tab" data-view="report" role="tab">Plugin-wise report</button>
+      <button class="tab" data-view="features" role="tab">Features</button>
+    </nav>
+    <div class="actions">
+      <button id="btnExportCsv" class="btn">Export CSV</button>
+      <label class="btn">
+        Import CSV
+        <input id="fileImport" type="file" accept=".csv,text/csv" hidden />
+      </label>
+      <button id="btnReset" class="btn btn-ghost" title="Discard all changes and load the original data">Reset</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view active">
+      <div class="kpis" id="kpis"></div>
+      <p class="note">
+        Completion uses the middle of each range (80-90% counts as 85%). Not Yet Started counts as 0%.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <h2>Features by status</h2>
+          <div id="statusChart" class="chart"></div>
+        </div>
+        <div class="card">
+          <h2>Lowest completion plugins</h2>
+          <div id="lowChart" class="chart"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Average completion by plugin</h2>
+        <div id="moduleChart" class="chart"></div>
+      </div>
+    </section>
+
+    <!-- PLUGIN-WISE REPORT -->
+    <section id="view-report" class="view">
+      <div class="toolbar">
+        <input id="reportSearch" type="search" placeholder="Search plugins…" />
+        <span class="muted" id="reportCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="reportTable" class="table">
+          <thead>
+            <tr>
+              <th data-sort="module">Plugin / Module</th>
+              <th data-sort="avg" class="num">Avg completion</th>
+              <th data-sort="total" class="num">Features</th>
+              <th data-sort="notStarted" class="num">Not started</th>
+              <th data-sort="inProgress" class="num">In progress</th>
+              <th data-sort="done" class="num">Completed</th>
+              <th data-sort="devs">Developers</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FEATURES (EDITABLE) -->
+    <section id="view-features" class="view">
+      <div class="toolbar">
+        <input id="featSearch" type="search" placeholder="Search feature or developer…" />
+        <select id="filterModule"><option value="">All plugins</option></select>
+        <select id="filterStatus"><option value="">All statuses</option></select>
+        <button id="btnAdd" class="btn btn-primary">+ Add feature</button>
+        <span class="muted" id="featCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="featTable" class="table editable">
+          <thead>
+            <tr>
+              <th>Plugin / Module</th>
+              <th>Feature</th>
+              <th>Development completed (%)</th>
+              <th>Developer Name</th>
+              <th class="col-del"></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <datalist id="moduleList"></datalist>
+    </section>
+  </main>
+
+  <div id="tooltip" class="tooltip" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
